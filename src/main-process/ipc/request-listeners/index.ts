@@ -1,10 +1,11 @@
-import { Menu, ipcMain } from "electron";
+import { Menu } from "electron";
 import { getMainWindow } from "@/main-window/main-process";
+import { typedIpcMain } from "@/typed-ipc/ipc-main";
 
-export function setupIpc() {
-  ipcMain.removeAllListeners();
+export function initRequestListeners() {
+  typedIpcMain.removeAllListeners();
 
-  ipcMain.on("window-control", (_event, { control }) => {
+  typedIpcMain.on("window-control", (_event, { control }) => {
     const window = getMainWindow();
     if (!window) {
       return;
@@ -23,7 +24,7 @@ export function setupIpc() {
     }
   });
 
-  ipcMain.on("show-application-menu", (_event, { x, y }) => {
+  typedIpcMain.on("show-application-menu", (_event, { x, y }) => {
     Menu.getApplicationMenu()?.popup({ x: Math.ceil(x), y: Math.ceil(y) });
   });
 }

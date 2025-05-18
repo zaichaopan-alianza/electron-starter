@@ -16,6 +16,7 @@ export const createMainWindow = () => {
     titleBarStyle: "hiddenInset",
     frame: !__WIN32__,
     show: false,
+    
   });
 
   // and load the index.html of the app.

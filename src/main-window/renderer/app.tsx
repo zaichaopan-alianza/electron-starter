@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "@/ui/globals.css";
-import { AppTitleBar } from "./app-title-bar";
+import { TitleBar } from "./title-bar";
 import {
   createMemoryRouter,
   Link,
@@ -56,9 +56,13 @@ export function App() {
     navigate("/login");
   }, []);
 
+  React.useEffect(() => {
+    electronBridge.ipcRenderer.send("ipc-ready", "main-window");
+  }, []);
+
   return (
     <div className="text-gray-100 flex flex-col flex-1 bg-gradient-to-r from-fuchsia-900 to-fuchsia-950">
-      <AppTitleBar />
+      <TitleBar />
       <Outlet />
     </div>
   );
@@ -70,7 +74,9 @@ function Login() {
       <div className="flex-1 flex justify-center items-center">
         <form className="flex flex-col gap-4 w-2/3">
           <CommandIcon size={36} />
-          <h1 className="text-3xl font-medium py-4">Sing in to your account</h1>
+          <h1 className="text-3xl font-medi um py-4">
+            Sing in to your account
+          </h1>
 
           <Input placeholder="Email" type="email" />
           <Input placeholder="Password" type="password" />

@@ -1,7 +1,8 @@
 import { app, BrowserWindow } from "electron";
-import { setupIpc } from "./ipc";
 import { setApplicationMenu } from "./menu";
 import { createMainWindow } from "@/main-window/main-process";
+import { initRequestListeners } from "./ipc/request-listeners";
+import { initRequestResponseListeners } from "./ipc/request-response-listeners";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -10,7 +11,8 @@ if (require("electron-squirrel-startup")) {
 
 function onReady() {
   createMainWindow();
-  setupIpc();
+  initRequestListeners()
+  initRequestResponseListeners();
   setApplicationMenu();
 }
 

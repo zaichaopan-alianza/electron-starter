@@ -11,6 +11,7 @@ import {
 } from "@/ui/components/base/dropdown-menu";
 
 export function Home() {
+
   return (
     <div className="flex-1 flex pr-2 pb-1 text-white">
       <div className="w-[4.5rem] flex flex-col gap-5 items-center pt-1 pb-4">

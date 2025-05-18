@@ -1,5 +1,5 @@
 import React from "react";
-import { TitleBar } from "@/ui/components/title-bar";
+import { TitleBar as BaseTitleBar } from "@/ui/components/title-bar";
 import {
   Dialog,
   DialogContent,
@@ -8,12 +8,13 @@ import {
 import { Button } from "@/ui/components/base/button";
 import { SearchCombobox } from "@/ui/components/search-combobox";
 import { useLocation } from "react-router-dom";
+import { WindowsControlButtons } from "@/ui/components/windows-control-buttons";
 
-export function AppTitleBar() {
+export function TitleBar() {
   const { pathname } = useLocation();
 
   return (
-    <TitleBar
+    <BaseTitleBar
       left={
         __WIN32__ ? (
           <Button
@@ -22,7 +23,7 @@ export function AppTitleBar() {
                 event.currentTarget.getBoundingClientRect();
               x = x - 15;
               y = y - 15;
-              electronBridge.showApplicationMenu({
+              electronBridge.ipcRenderer.send("show-application-menu", {
                 x,
                 y,
               });
@@ -49,6 +50,7 @@ export function AppTitleBar() {
         ) : undefined
       }
       middle={pathname.includes("home") && <SearchModal />}
+      right={<WindowsControlButtons windowName="main-window" />}
     />
   );
 }
@@ -84,7 +86,6 @@ function SearchModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {/* hover:text-[color:hsl(35,77%,62%) */}
         <Button
           ref={dialogTriggerButtonRef}
           type="button"
