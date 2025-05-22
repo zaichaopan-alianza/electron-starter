@@ -5,6 +5,7 @@ export type RequestChannels = {
   }) => void;
   "show-application-menu": (payload: { x: number; y: number }) => void;
   "ipc-ready": (windowName: "main-window") => void;
+  "change-language": (language: string) => void;
 };
 
 export type RequestResponseChannels = {
@@ -13,4 +14,5 @@ export type RequestResponseChannels = {
 
 export type PushChannels = {
   "before-quit": (window: string) => void;
+  "language-changed": (language: string) => void;
 };

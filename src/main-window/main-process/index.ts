@@ -32,7 +32,7 @@ export const createMainWindow = () => {
   }
 
   mainWindow.on("ready-to-show", () => {
-    mainWindow.show();
+    mainWindow?.show();
   });
 
   mainWindow.on("closed", () => {

@@ -3,18 +3,19 @@ import { setApplicationMenu } from "./menu";
 import { createMainWindow } from "@/main-window/main-process";
 import { initRequestListeners } from "./ipc/request-listeners";
 import { initRequestResponseListeners } from "./ipc/request-response-listeners";
+import { setupDevTools } from "./devtools";
+import { listenForProtocolHandler, setupProtocolHandler } from "./protocol";
+import { storage } from "./fileStorage";
+import { AppState } from "./app-state";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-function onReady() {
-  createMainWindow();
-  initRequestListeners()
-  initRequestResponseListeners();
-  setApplicationMenu();
-}
+export const appState = new AppState(storage);
+
+listenForProtocolHandler();
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -37,3 +38,14 @@ app.on("activate", () => {
     createMainWindow();
   }
 });
+
+function onReady() {
+  setupDevTools();
+  // setup
+  initRequestListeners();
+  initRequestResponseListeners();
+  //  setupMenu();
+  setApplicationMenu();
+  createMainWindow();
+  setupProtocolHandler();
+}
