@@ -1,13 +1,18 @@
-import { BrowserWindow, Menu } from "electron";
-import { getMainWindow } from "@/main-window/main-process";
+import { app, BrowserWindow, Menu } from "electron";
 import { typedIpcMain } from "@/typed-ipc/ipc-main";
 import { push } from "@/typed-ipc/ipc-web-contents";
 import { mainWindowState } from "@/main-window/main-process/state";
+import { appState } from "@/main-process/app-state";
 
 export function initRequestListeners() {
   typedIpcMain.removeAllListeners();
 
-  typedIpcMain.on("ipc-ready", (event, windowName) => {
+  typedIpcMain.on("quit-app", () => {
+    appState.setIsQuitting(true);
+    app.quit();
+  });
+
+  typedIpcMain.on("ipc-ready", (_event, windowName) => {
     if (windowName === "main-window") {
       mainWindowState.ipcReady();
     }

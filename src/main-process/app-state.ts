@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { Storage } from "./fileStorage";
+import { z } from "zod/v4";
+import { storage, Storage } from "./file-storage";
 
 export class AppState {
   private language: string;
@@ -10,6 +10,22 @@ export class AppState {
   constructor(private storage: Storage) {
     this.language = this.storage.getItem("language", z.string(), "en");
     this.theme = this.storage.getItem("language", z.string(), "theme");
+  }
+
+  getIsQuitting() {
+    return this.isQuitting;
+  }
+
+  getIsQuittingForUpdate() {
+    return this.isQuittingForUpdate;
+  }
+
+  setIsQuittingForUpdate(isQuittingForUpdate: boolean) {
+    this.isQuittingForUpdate = isQuittingForUpdate;
+  }
+
+  setIsQuitting(isQuitting: boolean) {
+    this.isQuitting = isQuitting;
   }
 
   getLanguage() {
@@ -31,4 +47,5 @@ export class AppState {
   }
 }
 
-//
+
+export const appState = new AppState(storage);

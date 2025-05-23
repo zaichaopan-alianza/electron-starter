@@ -38,6 +38,8 @@
     "electron-devtools-installer": "^4.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "eslint": "^8.0.1",
+    "eslint-import-resolver-typescript": "^4.3.5",
+    "eslint-plugin-import": "^2.31.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.303.0",
     "postcss": "^8.4.32",

@@ -13,13 +13,42 @@
     "plugin:import/typescript"
   ],
   "settings": {
+    "import/parsers": {
+      // Tell import plugin to use TS parser for TS files
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
-      "alias": {
-        "map": [
-          ["@", "./src"]
-        ],
-        "extensions": [".ts", ".tsx"]
+      "typescript": {
+        "alwaysTryTypes": true // Recommended to resolve `@types` packages
+      },
+      "node": {
+        // Also include node resolver for standard node_modules imports
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs"]
       }
     }
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": [
+          "ConditionalExpression",
+          "TemplateLiteral",
+          "ObjectExpression",
+          "ArrayExpression",
+          "LogicalExpression"
+        ]
+      }
+    ],
+    "import/no-cycle": ["error", { "maxDepth": "∞" }],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "ignoreRestSiblings": true }
+    ],
+    "@typescript-eslint/ban-ts-comment": "off"
   }
 }

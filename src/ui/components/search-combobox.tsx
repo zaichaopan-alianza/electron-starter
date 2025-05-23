@@ -30,7 +30,7 @@ export function SearchCombobox<T>({
   >("idle");
   const [query, setQuery] = React.useState("");
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
-  const abortControllerRef = React.useRef<AbortController>(null);
+  const abortControllerRef = React.useRef<AbortController | null>(null);
   const [items, setItems] = React.useState<Array<T> | null>(null);
 
   function shift(toward: 1 | -1) {
@@ -78,7 +78,9 @@ export function SearchCombobox<T>({
     }
 
     if (e.code === "Enter") {
-      onItemSelected?.(items[selectedIndex]);
+      if (items?.[selectedIndex]) {
+        onItemSelected?.(items[selectedIndex]);
+      }
     }
     return;
   }
@@ -124,8 +126,8 @@ export function SearchCombobox<T>({
           ) : state === "loading" ? (
             <div className="py-4 flex justify-center">Loading...</div>
           ) : state === "success" ? (
-            items?.length > 0 ? (
-              items.map((item, index) => {
+            items?.length && items?.length > 0 ? (
+              items?.map((item, index) => {
                 const isSelected = selectedIndex === index;
                 return (
                   <ScrollIntoView<HTMLDivElement>

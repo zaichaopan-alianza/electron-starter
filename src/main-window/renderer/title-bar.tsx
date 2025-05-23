@@ -71,7 +71,7 @@ function SearchModal() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  async function queryFn(query: string, signal: AbortSignal) {
+  async function queryFn(query: string, signal: AbortSignal | undefined) {
     const response = await fetch(
       `https://api.github.com/search/repositories?q=${query}`,
       {

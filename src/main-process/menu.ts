@@ -1,4 +1,4 @@
-import { app, Menu, MenuItemConstructorOptions} from "electron";
+import { app, Menu, MenuItemConstructorOptions, shell } from "electron";
 
 function createTemplate() {
   const items: MenuItemConstructorOptions[] = [];
@@ -86,7 +86,6 @@ function createTemplate() {
         {
           label: "Learn More",
           click: async () => {
-            const { shell } = require("electron");
             await shell.openExternal("https://electronjs.org");
           },
         },

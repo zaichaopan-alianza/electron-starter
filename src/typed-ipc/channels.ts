@@ -1,4 +1,5 @@
 export type RequestChannels = {
+  "quit-app": () => void;
   "window-control": (payload: {
     windowName: "main-window";
     control: "minimize" | "maximize" | "close";

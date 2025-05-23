@@ -1,5 +1,5 @@
 import Store from "electron-store";
-import {ZodSchema } from "zod";
+import type {ZodType } from "zod/v4";
 
 export class Storage {
   private store: Store;
@@ -8,11 +8,11 @@ export class Storage {
     this.store = storeInstance;
   }
 
-  getItem<T>(key: string, schema: ZodSchema<T>, defaultValue: T): T;
+  getItem<T>(key: string, schema: ZodType<T>, defaultValue: T): T;
   getItem(key: string): unknown;
   getItem<T>(
     key: string,
-    schema?: ZodSchema<T>,
+    schema?: ZodType<T>,
     defaultValue?: T
   ): T | unknown {
     const storedValue = this.store.get(key);
