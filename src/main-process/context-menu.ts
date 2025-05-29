@@ -1,8 +1,8 @@
+import { BrowserWindow, shell } from "electron";
+import contextMenu from "electron-context-menu";
 import { ContextMenuData } from "@/typed-ipc/channels";
 import { typedIpcMain } from "@/typed-ipc/ipc-main";
 import { push } from "@/typed-ipc/ipc-web-contents";
-import { BrowserWindow, shell } from "electron";
-import contextMenu from "electron-context-menu";
 
 export function createContextMenu() {
   contextMenu({
