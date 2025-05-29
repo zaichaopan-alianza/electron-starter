@@ -1,3 +1,8 @@
+export type ContextMenuData = {
+  type: "message";
+  data: { id: string };
+};
+
 export type RequestChannels = {
   "quit-app": () => void;
   "window-control": (payload: {
@@ -7,6 +12,10 @@ export type RequestChannels = {
   "show-application-menu": (payload: { x: number; y: number }) => void;
   "ipc-ready": (windowName: "main-window") => void;
   "change-language": (language: string) => void;
+  "show-context-menu": () => void;
+  "context-menu-data": (
+    data?: ContextMenuData
+  ) => void;
 };
 
 export type RequestResponseChannels = {
@@ -14,6 +23,7 @@ export type RequestResponseChannels = {
 };
 
 export type PushChannels = {
-  "before-quit": (window: string) => void;
+  "before-quit": () => void;
   "language-changed": (language: string) => void;
+  "get-context-menu-element": (payload: { x: number; y: number }) => void;
 };

@@ -33,7 +33,7 @@ export function listenForProtocolHandler() {
 
   app.removeAllListeners("second-instance");
 
-  app.on("second-instance", (_event, commandLine, _workingDirectory) => {
+  app.on("second-instance", (_event, commandLine,) => {
     // Someone tried to run a second instance
     scanArgv(commandLine, [defaultProtocol, "tel", "callto"]);
   });

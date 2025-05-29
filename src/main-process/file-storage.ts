@@ -1,5 +1,8 @@
 import Store from "electron-store";
-import type {ZodType } from "zod/v4";
+import * as v from "valibot";
+import type { BaseIssue, BaseSchema } from "valibot";
+
+console.log("v", v.safeParse);
 
 export class Storage {
   private store: Store;
@@ -8,17 +11,21 @@ export class Storage {
     this.store = storeInstance;
   }
 
-  getItem<T>(key: string, schema: ZodType<T>, defaultValue: T): T;
+  getItem<T>(
+    key: string,
+    schema: BaseSchema<unknown, T, BaseIssue<unknown>>,
+    defaultValue: T
+  ): T;
   getItem(key: string): unknown;
   getItem<T>(
     key: string,
-    schema?: ZodType<T>,
+    schema?: BaseSchema<unknown, T, BaseIssue<unknown>>,
     defaultValue?: T
   ): T | unknown {
     const storedValue = this.store.get(key);
     if (schema !== undefined && defaultValue !== undefined) {
-      const result = schema.safeParse(storedValue);
-      result.success ? result.data : defaultValue;
+      const result = v.safeParse(schema, storedValue);
+      result.success ? result.output : defaultValue;
     }
     return storedValue;
   }

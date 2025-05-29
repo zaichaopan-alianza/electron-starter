@@ -1,14 +1,14 @@
 import { typedIpcMain } from "@/typed-ipc/ipc-main";
 import { shell } from "electron";
 
-export function initRequestResponseListeners() {
+export function setupRequestResponseListeners() {
   typedIpcMain.handle("open-external", async (_event, path) => {
     try {
-      await shell.openExternal(path)
-      return true
+      await shell.openExternal(path);
+      return true;
     } catch (e) {
-        console.error(`Failed to open external link: ${path}`, e)
-      return false
+      console.error(`Failed to open external link: ${path}`, e);
+      return false;
     }
   });
 }

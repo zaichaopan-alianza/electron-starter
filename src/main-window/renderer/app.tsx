@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React, { useEffect } from "react";
+import { createRoot } from "react-dom/client";
 import "@/ui/globals.css";
 import { TitleBar } from "./title-bar";
 import {
@@ -17,6 +17,10 @@ import { CommandIcon } from "lucide-react";
 import { Chat } from "./screens/Chat";
 import { Meet } from "./screens/Meet";
 import { Calls } from "./screens/Calls";
+import {
+  useContextMenu,
+  useGetContextMenuElement,
+} from "@/ui/hooks/use-get-context-menu-element";
 
 const router = createMemoryRouter([
   {
@@ -52,12 +56,20 @@ const router = createMemoryRouter([
 
 export function App() {
   const navigate = useNavigate();
-  React.useEffect(() => {
+  useGetContextMenuElement();
+
+  useEffect(() => {
     navigate("/login");
+  }, [navigate]);
+
+  useEffect(() => {
+    electronBridge.ipcRenderer.send("ipc-ready", "main-window");
   }, []);
 
-  React.useEffect(() => {
-    electronBridge.ipcRenderer.send("ipc-ready", "main-window");
+  useEffect(() => {
+    return electronBridge.ipcRenderer.on("before-quit", () => {
+      electronBridge.ipcRenderer.send("quit-app");
+    });
   }, []);
 
   return (
@@ -74,7 +86,13 @@ function Login() {
       <div className="flex-1 flex justify-center items-center">
         <form className="flex flex-col gap-4 w-2/3">
           <CommandIcon size={36} />
-          <h1 className="text-3xl font-medi um py-4">
+          <h1
+            className="text-3xl font-medi um py-4"
+            {...useContextMenu({
+              type: "message",
+              data: { id: "1" },
+            })}
+          >
             Sing in to your account
           </h1>
 
@@ -98,7 +116,7 @@ function Login() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-ReactDOM.createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>

@@ -1,10 +1,10 @@
-import { app, BrowserWindow, Menu } from "electron";
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from "electron";
 import { typedIpcMain } from "@/typed-ipc/ipc-main";
 import { push } from "@/typed-ipc/ipc-web-contents";
 import { mainWindowState } from "@/main-window/main-process/state";
 import { appState } from "@/main-process/app-state";
 
-export function initRequestListeners() {
+export function setupRequestListeners() {
   typedIpcMain.removeAllListeners();
 
   typedIpcMain.on("quit-app", () => {
@@ -47,5 +47,24 @@ export function initRequestListeners() {
   typedIpcMain.on("change-language", (_event, language) => {
     // ...
     push(BrowserWindow.getAllWindows(), "language-changed", language);
+  });
+
+  typedIpcMain.on("show-context-menu", (event) => {
+    const template: Array<MenuItemConstructorOptions> = [
+      {
+        label: "Menu Item 1",
+        click: () => {
+          event.sender.send("context-menu-command", "menu-item-1");
+        },
+      },
+      { type: "separator" },
+      { label: "Menu Item 2", type: "checkbox", checked: true },
+    ];
+    const menu = Menu.buildFromTemplate(template);
+    const window = BrowserWindow.fromWebContents(event.sender);
+
+    if (window) {
+      menu.popup({ window });
+    }
   });
 }

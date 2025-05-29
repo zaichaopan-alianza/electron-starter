@@ -5,11 +5,14 @@ export function push<Channel extends keyof PushChannels>(
   window: BrowserWindow | null | Array<BrowserWindow>,
   channel: Channel,
   ...args: Parameters<PushChannels[Channel]>
-): void {
+) {
+  if (!window) {
+    return;
+  }
   const windows = Array.isArray(window) ? window : [window];
 
   windows.forEach((window) => {
-    if (window && window.isDestroyed()) {
+    if (!window.isDestroyed()) {
       window.webContents.send(channel, ...args);
     }
   });

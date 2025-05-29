@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "nodenext",
+    "module": "CommonJS",
     "allowJs": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -11,7 +11,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "dist",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "paths": {

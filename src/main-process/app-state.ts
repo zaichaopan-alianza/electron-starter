@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import * as v from "valibot";
 import { storage, Storage } from "./file-storage";
 
 export class AppState {
@@ -8,8 +8,8 @@ export class AppState {
   private isQuittingForUpdate = false;
 
   constructor(private storage: Storage) {
-    this.language = this.storage.getItem("language", z.string(), "en");
-    this.theme = this.storage.getItem("language", z.string(), "theme");
+    this.language = this.storage.getItem("language", v.string(), "en");
+    this.theme = this.storage.getItem("language", v.string(), "theme");
   }
 
   getIsQuitting() {
@@ -46,6 +46,5 @@ export class AppState {
     this.storage.setItem("theme", theme);
   }
 }
-
 
 export const appState = new AppState(storage);

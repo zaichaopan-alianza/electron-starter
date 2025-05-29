@@ -96,7 +96,7 @@ function createTemplate() {
   return items;
 }
 
-export function setApplicationMenu() {
+export function setupApplicationMenu() {
   const menu = Menu.buildFromTemplate(createTemplate());
   Menu.setApplicationMenu(menu);
 }

@@ -1,3 +1,5 @@
+import { appState } from "@/main-process/app-state";
+import { push } from "@/typed-ipc/ipc-web-contents";
 import { BrowserWindow } from "electron";
 import path from "node:path";
 
@@ -16,7 +18,6 @@ export const createMainWindow = () => {
     titleBarStyle: "hiddenInset",
     frame: !__WIN32__,
     show: false,
-    
   });
 
   // and load the index.html of the app.
@@ -35,6 +36,32 @@ export const createMainWindow = () => {
     mainWindow?.show();
   });
 
+  mainWindow.on("close", (event) => {
+    // if (appState.getIsQuitting() || shouldQuitForUpdate()
+    if (appState.getIsQuitting()) {
+      return;
+    }
+    // Hide main window instead of closing
+    event.preventDefault();
+
+    if (__DARWIN__) {
+      if (mainWindow?.isFullScreen()) {
+        mainWindow.once("leave-full-screen", () => {
+          hideMainWindow();
+        });
+        mainWindow.setFullScreen(false);
+        return;
+      }
+
+      hideMainWindow();
+      return;
+    }
+
+    if (__WIN32__) {
+      hideMainWindow();
+    }
+  });
+
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
@@ -45,4 +72,9 @@ export const createMainWindow = () => {
 
 export function getMainWindow() {
   return mainWindow;
+}
+
+function hideMainWindow() {
+  mainWindow?.blur();
+  mainWindow?.hide();
 }

@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "postinstall": "patch-package"
   },
   "keywords": [],
   "license": "MIT",
@@ -42,6 +43,7 @@
     "eslint-plugin-import": "^2.31.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.303.0",
+    "patch-package": "^8.0.0",
     "postcss": "^8.4.32",
     "react": "^18.2.0",
     "react-aria-components": "^1.1.1",
@@ -55,11 +57,14 @@
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-react-aria-components": "^1.1.1",
     "ts-node": "^10.0.0",
-    "typescript": "~4.5.4"
+    "typescript": "^5.0.0"
   },
   "dependencies": {
-    "electron-store": "^10.0.1",
+    "electron-context-menu": "^4.1.0",
+    "electron-store": "8.2.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "p-wait-for": "^5.0.2",
-    "zod": "^3.25.20"
+    "tinykeys": "^3.0.0",
+    "valibot": "^1.1.0"
   }
 }

@@ -94,7 +94,11 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased flex;
+    @apply bg-background text-foreground font-sans antialiased flex select-none;
+  }
+
+  [data-context-menu] {
+    @apply select-text;
   }
 
   #root {
