@@ -5,7 +5,7 @@ import { setupRequestListeners } from "./ipc/request-listeners";
 import { setupRequestResponseListeners } from "./ipc/request-response-listeners";
 import { setupDevTools } from "./devtools";
 import { listenForProtocolHandler, setupProtocolHandler } from "./protocol";
-import { createContextMenu } from "./create-content-menu";
+import { createContextMenu } from "./context-menu";
 import { appState } from "./app-state";
 import { push } from "@/typed-ipc/ipc-web-contents";
 import { showWindow } from "./window";
